@@ -44,7 +44,9 @@
     "index.js",
     "README.md",
     "README.zh.md",
-    "LICENSE"
+    "LICENSE",
+    "assets",
+    "screenshots.json"
   ],
   "dsh": {
     "bundle": {

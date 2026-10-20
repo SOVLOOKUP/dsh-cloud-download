@@ -13,6 +13,8 @@ Built for DSH running on a remote host, in a container, on a NAS, or behind a re
 | Document preview header | A download icon for the file being previewed |
 | Unsupported-preview empty state | A labeled “Download file” button |
 
+![Download action on a delivery card](assets/card.png)
+
 The download icons show their own state: **Preparing download…**, **Download started**, or **Download failed. Click to retry.** A failed request also shows the server's HTTP status and reason in a short toast, instead of the browser's generic “download failed” message.
 
 ## Why this plugin exists
