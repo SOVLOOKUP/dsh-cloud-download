@@ -69,7 +69,7 @@ dsh plugin --profile web add github:SOVLOOKUP/dsh-cloud-download
 
 Then reload the browser page. No build step: `index.js`, `client.js`, and `cordis.patch.yml` ship as-is.
 
-**Requires DSH Web 0.1.7 or newer** (the per-file action slots). On a Host without those slots the plugin stays inert rather than replacing the official card.
+**Requires a DSH Web build that exposes the four per-file slots listed above** (developed against DSH 0.2.x). On a Host without those slots the plugin stays inert rather than replacing the official card.
 
 ## Limits
 

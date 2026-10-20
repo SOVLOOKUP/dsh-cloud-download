@@ -69,7 +69,7 @@ dsh plugin --profile web add github:SOVLOOKUP/dsh-cloud-download
 
 然后刷新浏览器页面。没有构建步骤，`index.js`、`client.js`、`cordis.patch.yml` 直接发布。
 
-**需要 DSH Web 0.1.7 或更新版本**（按文件的操作槽位）。宿主没有这些槽位时插件保持惰性，不会替换官方卡片。
+**需要提供上述四个按文件槽位的 DSH Web**（在 0.2.x 上开发）。宿主没有这些槽位时插件保持惰性，不会替换官方卡片。
 
 ## 边界
 
