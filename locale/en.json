@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Cloud DSH Download",
+    "description": "Download files from delivery cards, changed-file review, and the document preview; hide native open controls that cannot work in headless or remote deployments."
+  },
+  "download.label": "Download file"
+}
