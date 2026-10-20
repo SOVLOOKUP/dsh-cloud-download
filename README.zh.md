@@ -55,17 +55,13 @@ location.reload()
 
 ## 安装
 
-从 npm：
-
-```sh
-dsh plugin --profile web add dsh-cloud-download
-```
-
 从这个仓库：
 
 ```sh
 dsh plugin --profile web add github:SOVLOOKUP/dsh-cloud-download
 ```
+
+npm 包计划使用同名发布；目前 GitHub 安装即可。
 
 然后刷新浏览器页面。没有构建步骤，`index.js`、`client.js`、`cordis.patch.yml` 直接发布。
 

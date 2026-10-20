@@ -55,17 +55,13 @@ location.reload()
 
 ## Install
 
-From npm:
-
-```sh
-dsh plugin --profile web add dsh-cloud-download
-```
-
 From this repository:
 
 ```sh
 dsh plugin --profile web add github:SOVLOOKUP/dsh-cloud-download
 ```
+
+An npm release is planned under the same name; GitHub install works today.
 
 Then reload the browser page. No build step: `index.js`, `client.js`, and `cordis.patch.yml` ship as-is.
 
