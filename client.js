@@ -493,4 +493,3 @@ html:not(.fd-native-open) [data-open-target] {
         };
     },
 });
-export {};

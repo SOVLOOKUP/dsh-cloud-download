@@ -1,6 +1,6 @@
 {
   "name": "dsh-cloud-download",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Download delivered, changed, and previewed files from the DSH Web GUI, and hide native open controls that cannot work in headless or remote deployments.",
   "type": "module",
   "license": "MIT",
@@ -29,7 +29,7 @@
   },
   "main": "./index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && node scripts/strip-client-export.mjs",
     "typecheck": "tsc -p tsconfig.test.json",
     "test": "npm run typecheck && npm run build && tsx --test test/*.test.ts",
     "prepack": "npm run build"
