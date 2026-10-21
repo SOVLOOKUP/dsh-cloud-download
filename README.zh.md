@@ -33,7 +33,7 @@
 2. 通过后交给浏览器下载管理器取附件，大文件直接落盘，不占页面内存。
 3. 预检失败时再发一次 `GET`，把 Host 返回的错误文本显示在页内提示里。
 
-交付卡片和审查页的下载请求只带官方卡片已有的坐标——Session、事件序号、文件下标。路径不出现在请求里，Host 从会话日志反查。
+交付卡片和审查页的下载请求只带官方卡片已有的坐标——Session、事件序号、文件下标。路径不出现在请求里，Host 从会话日志反查，并把解析出的文件限制在配置的 workspace root 内；workspace 外的路径会直接返回 `403`，不会读取。
 
 预览标题栏复用 DSH 内置的 `/api/file`，需要绝对路径，单文件上限约 20 MiB。更大的文件请从交付卡片或审查页下载。
 
@@ -63,13 +63,14 @@ dsh plugin --profile web add github:SOVLOOKUP/dsh-cloud-download
 
 npm 包计划使用同名发布；目前 GitHub 安装即可。
 
-然后刷新浏览器页面。没有构建步骤，`index.js`、`client.js`、`cordis.patch.yml` 直接发布。
+然后刷新浏览器页面。发布包直接包含构建好的 `index.js` 和 `client.js`；TypeScript 源码在 `src/`，在构建/发布时编译。
 
 **需要提供上述四个按文件槽位的 DSH Web**（在 0.2.x 上开发）。宿主没有这些槽位时插件保持惰性，不会替换官方卡片。
 
 ## 边界
 
 - 预览标题栏受 DSH `/api/file` 的约 20 MiB 限制。
+- 交付卡片和审查页的下载被限制在 Host 配置的 workspace root 内；workspace 外的文件返回 `403`。
 - 只下载单个文件；不做上传、目录扫描或 ZIP 打包。
 - 不绕过 DSH 的 Session / 文件系统鉴权。
 
@@ -83,12 +84,14 @@ npm 包计划使用同名发布；目前 GitHub 安装即可。
 ## 开发检查
 
 ```sh
-node --check index.js
-node --check client.js
+npm install
+npm run typecheck   # 严格 TypeScript，含测试
+npm test            # 路径逃逸 / 跨 Session 安全测试
+npm run build       # 从 src/ 生成 index.js 与 client.js
 npm pack --dry-run
 ```
 
-Host 半在 `/api/cloud.download` 注册一条鉴权路由；浏览器半注册四个增量槽位。不修改 DSH 核心包。
+Host 半在 `/api/cloud.download` 注册一条鉴权路由；浏览器半注册四个增量槽位。不修改 DSH 核心包。TypeScript 构建把运行时代码输出到包根目录，已有安装方式保持不变。
 
 ## License
 

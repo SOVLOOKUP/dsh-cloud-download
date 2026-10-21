@@ -33,7 +33,7 @@ This plugin:
 2. The browser's own download manager then fetches the attachment URL, so even a large file streams to disk instead of being buffered in page memory.
 3. A failed probe is followed by one `GET` so the Host's error text can be shown in the toast.
 
-Delivery and review downloads carry only the coordinates the official card already has — Session, durable event sequence, and file index. No path or extra capability crosses the wire; the Host resolves the path from the Session log.
+Delivery and review downloads carry only the coordinates the official card already has — Session, durable event sequence, and file index. No path or extra capability crosses the wire; the Host resolves the path from the Session log and confines it to the configured workspace root. A path outside that root returns `403` instead of being read.
 
 The preview header reuses DSH's built-in `/api/file` route, which needs an absolute Host path and caps a single file at roughly 20 MiB. For larger files, download from the delivery card or the review page.
 
@@ -63,13 +63,14 @@ dsh plugin --profile web add github:SOVLOOKUP/dsh-cloud-download
 
 An npm release is planned under the same name; GitHub install works today.
 
-Then reload the browser page. No build step: `index.js`, `client.js`, and `cordis.patch.yml` ship as-is.
+Then reload the browser page. The package ships built `index.js` and `client.js`; the TypeScript sources live in `src/` and are compiled at build/release time.
 
 **Requires a DSH Web build that exposes the four per-file slots listed above** (developed against DSH 0.2.x). On a Host without those slots the plugin stays inert rather than replacing the official card.
 
 ## Limits
 
 - The preview route is limited by DSH's `/api/file` (~20 MiB).
+- Delivery and review downloads are confined to the Host's configured workspace root. Files outside it are rejected with `403`.
 - This plugin downloads single files. It does not upload, scan folders, or build ZIP archives.
 - It does not bypass DSH's session/filesystem authorization.
 
@@ -83,12 +84,14 @@ This plugin is intentionally narrower: one download action across the card, the 
 ## Development
 
 ```sh
-node --check index.js
-node --check client.js
+npm install
+npm run typecheck   # strict TypeScript, including tests
+npm test            # path-escape and cross-Session security tests
+npm run build       # emit index.js and client.js from src/
 npm pack --dry-run
 ```
 
-The Host half registers one authenticated route at `/api/cloud.download`; the browser half registers four additive slots. No DSH core package is patched.
+The Host half registers one authenticated route at `/api/cloud.download`; the browser half registers four additive slots. No DSH core package is patched. The TypeScript build emits the runtime JS at the package root so existing installs keep working unchanged.
 
 ## License
 
